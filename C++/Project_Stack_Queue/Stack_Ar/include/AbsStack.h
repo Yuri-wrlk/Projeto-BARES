@@ -31,6 +31,7 @@ class AbsStack
 		Object * myStack;
 		size_t stackSize;
 		size_t stackCapacity;
+
 };
 
 
