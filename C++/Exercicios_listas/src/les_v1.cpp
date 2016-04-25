@@ -214,7 +214,10 @@ SNPtr find( SNPtr _pAIL, int _targetVal )
     while (_pAIL->mpNext != nullptr)
     {
     	if(_pAIL->mpNext->miData == _targetVal)
-    		return _pAIL;
+    	{	
+    		return _pAIL->mpNext;
+    	}
+    	_pAIL = _pAIL->mpNext;
     }
 
    	return NULL;
@@ -247,7 +250,7 @@ bool insert( SNPtr & _pAIL, SNPtr _pAnte, int _newVal )
    	else
    	{
    		SNPtr work = _pAIL;
-   		while(work == _pAnte)
+   		while(work != _pAnte)
    		{
    			work = work->mpNext;
    		}

@@ -7,6 +7,8 @@ using std::cout;
 
 int main ( void ) {
     SNPtr pHead = NULL;// nullptr;
+    int val;
+    SNPtr toBeFound = nullptr;
 
     pushFront( pHead, 1 );
     pushFront( pHead, 1792 );
@@ -37,7 +39,7 @@ int main ( void ) {
     print(pHead);
 
     std::cout << "Removendo o primeiro elemento da lista..." << std::endl;
-    int val;
+
     popFront (pHead, val);
     std::cout << "O primeiro elemento foi removido e era " << val << std::endl;
 
@@ -49,6 +51,22 @@ int main ( void ) {
     std::cout << "O último elemento foi removido e era " << val << std::endl;
 
     std::cout << "A lista atual é:" << std::endl;
+    print(pHead);
+
+    toBeFound = find(pHead, 198);
+
+    std::cout << "\nInserindo elemento na lista..." << std::endl;
+    insert(pHead, toBeFound, 45);
+
+    std::cout << "\nA lista atual é:" << std::endl;
+    print(pHead);
+
+    std::cout << "\nRemovendo elemento na lista..." << std::endl;
+    toBeFound = find(pHead, 13);
+    remove(pHead, toBeFound, val);
+    std::cout << "O elemento removido foi: " << val << std::endl;
+
+    std::cout << "\nA lista atual é:" << std::endl;
     print(pHead);
 
     cout << "\n\n>>> Normal exiting...\n";
