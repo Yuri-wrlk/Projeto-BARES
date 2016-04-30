@@ -1,0 +1,22 @@
+Priority #1:
+- Implement generic Queue and Stack
+- Define what we need to put inside the expression class
+	- Tokenization considering blank spaces
+	- Analysis of the expression line (calling a possible error class);
+	- PostFix 
+
+Como o programa deve funcionar:
+
+1- Vamos checar se os argumentos passados da linha de comando são válidos
+
+2- Se sim, nós vamos fazer a leitura linha a linha
+	
+	2.1- Pegar a linha e buscar para cada elemento da linha os possiveis erros (para detectar 1 ~ 8)
+
+	2.2 - Caso não haja erro de sintaxe, tokenizar a linha
+
+		2.2.1 - Transformar para pos-fixo
+
+		2.2.2 - Reliza as operações procurando pelos erros 9 e 10
+
+	2.3 - Mandar para o arquivo de saída o erro encontrado ou resultado
