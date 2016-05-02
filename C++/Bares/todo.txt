@@ -13,6 +13,17 @@ Como o programa deve funcionar:
 2- Se sim, nós vamos fazer a leitura linha a linha
 	
 	2.1- Pegar a linha e buscar para cada elemento da linha os possiveis erros (para detectar 1 ~ 8)
+	
+	2.1.1 - Criar classe Expressão, com os seguintes atributos
+		variáveis: string para guardar expressão inicial, fila para guardar expressão pós tokenização, fila pra 
+		guardar expressão pós-fixa, inteiro para coluna com possível erro, inteiro para guardar o tipo do erro, enum
+		para os possíveis erros
+		
+		métodos:
+			tipo de caractere
+			values expected
+			tokenize
+			
 
 	2.2 - Caso não haja erro de sintaxe, tokenizar a linha
 
