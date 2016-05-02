@@ -1,5 +1,6 @@
 Priority #1:
-- Implement generic Queue and Stack
+- Implement generic Queue and Stack 									//DONE
+- Implement failproof file reading 										//DONE
 - Define what we need to put inside the expression class
 	- Tokenization considering blank spaces
 	- Analysis of the expression line (calling a possible error class);
