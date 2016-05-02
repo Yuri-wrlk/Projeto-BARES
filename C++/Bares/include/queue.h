@@ -1,8 +1,3 @@
-#include <iostream>
-#include <algorithm>
-#include <stdexcept>
-#include <cstring>
-
 #ifndef _QUEUE_
 #define _QUEUE_
 
