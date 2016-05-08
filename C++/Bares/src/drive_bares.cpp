@@ -1,4 +1,5 @@
 #include "header.h"
+#include "expressions_lib.h"
 
 bool openFile (int argc,const char * argv[], std::ifstream & src_file, std::ofstream & dest_file);
 
@@ -16,9 +17,9 @@ int main (int argc, const char *argv[])
 		std::getline(dataFile, expLine);
 		if(expLine.length() != 0)
 		{
-			/*
+			
 			Expression tempExp(expLine);
-			tempExp.analysis();
+			/*tempExp.analysis();
 			destFile << tempExp.results();
 			*/
 		}
