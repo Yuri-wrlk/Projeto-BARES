@@ -19,6 +19,16 @@ int main (int argc, const char *argv[])
 		{
 			
 			Expression tempExp(expLine);
+			
+			if(tempExp.tokenize())
+				std::cout << "Deu certo!" << std::endl;
+			else
+			{
+				continue;
+			}
+			
+			
+			/*
 			if (tempExp.analysis())
 			{
 				std::cout << "OK!\n";
@@ -28,7 +38,7 @@ int main (int argc, const char *argv[])
 				std::string error = tempExp.getError();
 				std::cout << error << "\n"; // to debug
 			}
-			/*
+			
 			tempExp.tokenize();
 			if ( not tempExp.analysis() )
 			{

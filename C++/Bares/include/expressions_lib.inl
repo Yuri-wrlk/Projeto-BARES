@@ -1,202 +1,6 @@
 #include "expressions_lib.h"
 
-bool Expression::analysis( void )
-{
-	size_t start(0);
-	return isExpression( start, expression.length() - 1 );
-	/*
-	int previous = 0;
-
-	bool first_char = true;
-
-	int bracket_count = 0;
-
-	for (size_t i = 0; i < expression.length() - 1; ++i)
-	{
-		
-		while(expression[i] == 32 or expression[i] == 9)
-			continue;
-
-		if ( first_char )
-		{
-			if( isOperator(expression[i]) )
-			{
-				err_type = ILL_FORMED;
-				err_column = i;
-				return false;
-			}
-			else if ( isClBracket(expression[i]) )
-			{
-				err_type = MISMATCH;
-				err_column = i;
-				return false;
-			}
-			else
-			{
-				first_char = false;
-				if ()
-				{
-					
-				}
-				continue;
-			}
-		}
-		else
-		{
-			if ( isInteger(expression[i]) )
-			{
-				if ( isInteger(expression[i+1]) )
-				{
-					continue;
-				}
-				else 
-			}
-
-		}
-		return true;
-	}
-	*/
-
-}
-
-bool Expression::isExpression( size_t & start, size_t end )
-{
-	if ( isTerm(start) )
-	{
-		while( start < end )
-		{
-			if ( isOperator(start) )
-			{
-				start++;
-				if ( isTerm(start) )
-				{
-					continue;
-				}
-				else
-				{
-					err_type = LOST_OPERATOR;
-					err_column = i+1;
-				}
-			}
-			else
-			{
-				err_type = INVALID;
-				err_column = i+1;
-
-			}
-		}
-	}
-	else
-	{
-		err_type = EXTRANEOUS;
-		err_column = i+1;
-	}
-	return true;
-}
-
-bool Expression::isTerm( size_t & index )
-{
-	bracket_count = 0;
-
-	if ( isNumber(index)  )
-	{
-		index++;
-		return true;
-	}
-
-	else if (expression[index] == '+' or expression[index] == '-')
-	{
-		while( expression[index+1] == '+' or expression[index+1] == '-')
-			index++;
-
-		if (isNumber(index))
-		{
-			index++;
-			return true;
-		}
-		else
-		{
-			err_type = ILL_FORMED;
-			err_column = i+1;
-			return false;
-		}
-	}
-
-	// =============== FINISH THIS! ==================
-	else if( isOpBracket(expression[index]) )
-	{
-		this_end = index + 1;
-		bracket_count++;
-		std::vector<int> bracket_location;
-
-		while (this_end < expression.length() and bracket_count > 0)
-		{
-			if ( isClBracket(expression[this_end] )
-			{
-				bracket_count--;
-			}
-			else if ( isOpBracket(expression[this_end]) )
-			{
-				bracket_count++;
-			}
-			this_end++;
-		}
-		if (bracket_count == 0)
-		{
-			return isExpression(index, this_end);
-		}
-		else if ( bracket_count > 0 )
-		{
-			/* code */
-		}
-
-
-	}
-	// ===============================================
-}
-
-bool Expression::isNumber( size_t & index )
-{
-	if (expression[index] > 47 && expression[index] < 58)
-	{
-		while( expression[index + 1] > 47 && expression[index + 1] < 58 )
-			i++;
-		
-		return true;
-	}
-	return false;	
-}
-/*
-bool Expression::pre_tokenize( void )
-{
-
-	std::string aux = "";
-	
-	for(auto i (0u); i < expression.length(); ++i)
-	{
-		aux = aux + expression[i];
-
-		if (isInteger(expression[i])) 
-		{
-			while(i + 1 < expression.length() && isInteger(expression[i + 1]))
-			{	
-				aux = aux + expression[++i];
-			}
-
-		}
-
-		pre_tokenized.enqueue(aux);
-		aux = "";
-	}
-
-	std::cout << "tokenized is\n";
-	std::cout << pre_tokenized;
-	std::cout << "\n";
-	return true;
-}
-*/
-
-inline bool isInteger(const std::string & s)
+bool Expression::isInteger(const std::string & s)
 {
    if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
 
@@ -213,36 +17,54 @@ bool Expression::tokenize( void )
 	
 	for(auto i (0u); i < expression.length(); ++i)
 	{
-		if(expression[i] == ' ')
+		if(expression[i] == ' ' or expression[i] == 9) //tab in ASCII is 9
 			continue;
-		else if ( isOperator(expression[i]) )
+		
+		aux = aux + expression[i];
+		
+		if ( isdigit(expression[i]) ) 
 		{
-			aux = aux + expression[i];
-			tokenized.enqueue( aux );
-			aux = "";
-		}
-		else if (isInteger(expression[i])) 
-		{
-			aux = aux + expression[i];
-			while(i + 1 < expression.length() && isInteger(expression[i + 1]))
+			while(i + 1 < expression.length() && isdigit(expression[i + 1]))
 			{	
 				aux = aux + expression[++i];
 			}
-
-			tokenized.enqueue(aux);
-			aux = "";
 		}
+		
+		
+		if(!analysis(aux, i))
+		{
+			std::cout << "O erro é: " << err_type << " Na coluna: " << err_column << std::endl;
+			return false;
+		}
+			
+		/*
+		
+		if(!bracket_count.isEmpty)
+		{
+			err_type = MISMATCH;
+			err_column = bracket_count.top();
+		}
+		
+		*/
+		
+		
+		tokenized.enqueue(aux);
+		aux = "";
+		
+		
 	}
-
+	/*
 	std::cout << "tokenized is\n";
 	std::cout << tokenized;
 	std::cout << "\n";
+	*/
 	return true;
 }
-	
-bool Expression::isOperator( char candidate )
+
+
+bool Expression::isOperator(char candidate)
 {
-	for (int i = 0; i < 6; ++i)
+	for (int i = 0; i < 8; ++i)
 	{
 		if (candidate == operators[i])
 			return true;
@@ -250,26 +72,111 @@ bool Expression::isOperator( char candidate )
 	return false;
 }
 
-bool Expression::isOpBracket( char candidate )
+bool Expression::analysis(const std::string & value, int position)
 {
-	return (candidate == '(');
+	if (isInteger(value))
+	{
+		if (last_char == NUMBER)
+		{
+			err_type = EXTRANEOUS;
+			err_column = position + 1;
+			return false;
+		}
+		
+		char  *p;
+		long int test = strtol(value.c_str(), &p, 10);
+		
+		if (test > 32767)
+		{
+			err_type = OUT_OF_RANGE;
+			err_column = position + 1;
+			return false;
+		}
+		
+		last_char = NUMBER;
+		
+	}
+	
+	else if( isOperator(value[0]) )
+	{
+		if( last_char == DEVOID or last_char == OPERATOR)
+		{
+			err_type = LOST_OPERATOR;
+			err_column = position + 1;
+			return false;
+		}
+		else if (last_char == OP_PARENTHESIS)
+		{
+			err_type = ILL_FORMED;
+			err_column = position + 1;
+			return false;
+		}
+		last_char = OPERATOR;
+	}
+	
+	else if( value[0] == '(' )
+	{
+		bracket_count.push(position);
+		
+		if ( last_char == NUMBER or last_char == ')')
+		{
+			err_type = EXTRANEOUS;
+			err_column = position + 1;
+			return false;
+		}
+		
+		last_char = OP_PARENTHESIS;
+		
+	}
+	
+	else if( value[0] == ')' )
+	{
+		if (bracket_count.isEmpty())
+		{
+			err_type = MISMATCH;
+			err_column = position + 1;
+			return false;
+			
+		}
+		
+		bracket_count.pop();
+		
+		if (last_char == '(')
+		{
+			err_type = ILL_FORMED;
+			err_column = position + 1;
+			return false;
+		}
+		if(isOperator(last_char))
+		{
+			err_type = EXTRANEOUS;
+			err_column = position + 1;
+			return false;
+		}
+		last_char = CL_PARENTHESIS;
+	}
+	
+	else if(isLetter(value[0]))
+	{
+		err_type = ILL_FORMED;
+		err_column = position + 1;
+		return false;
+	}
+	
+	else
+	{
+		err_type = INVALID_OPERAND;
+		err_column = position + 1;
+		return false;
+	}
+	
+	return true;
 }
 
-bool Expression::isClBracket( char candidate )
+bool Expression::isLetter(char candidate)
 {
-	return (candidate == ')');
-}
-
-bool Expression::isInteger( char candidate )
-{
-	if (candidate > 47 && candidate < 58)
+	if ( (candidate >= 65 and candidate <= 90) or (candidate >= 97 and candidate <= 122))
 		return true;
+		
 	return false;
-}
-
-std::string Expression::getError( void )
-{
-	std::string error_msg;
-	error_msg = "E" + std::to_string(err_type) + " " + std::to_string(err_column);
-	return error_msg;
 }

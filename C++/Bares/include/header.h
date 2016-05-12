@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <cstring>
 #include <fstream>
+#include <cctype>
 #include "queue.h"
 #include "stack.h"
 
