@@ -43,7 +43,11 @@ class Expression
 
 		bool analysis( void );
 
-		bool pre_tokenize( void );
+		bool isExpression( size_t & start, size_t end );
+		bool isTerm( size_t & index );
+		bool isNumber( size_t & index );
+
+		// bool pre_tokenize( void );
 
 		bool tokenize( void );
 

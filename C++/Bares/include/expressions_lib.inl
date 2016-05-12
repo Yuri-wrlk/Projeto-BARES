@@ -2,6 +2,9 @@
 
 bool Expression::analysis( void )
 {
+	size_t start(0);
+	return isExpression( start, expression.length() - 1 );
+	/*
 	int previous = 0;
 
 	bool first_char = true;
@@ -31,9 +34,9 @@ bool Expression::analysis( void )
 			else
 			{
 				first_char = false;
-				if (/* condition */)
+				if ()
 				{
-					/* code */
+					
 				}
 				continue;
 			}
@@ -52,10 +55,11 @@ bool Expression::analysis( void )
 		}
 		return true;
 	}
+	*/
 
 }
 
-bool isExpression( size_t & start, size_t end )
+bool Expression::isExpression( size_t & start, size_t end )
 {
 	if ( isTerm(start) )
 	{
@@ -88,12 +92,12 @@ bool isExpression( size_t & start, size_t end )
 		err_column = i+1;
 	}
 	return true;
-
-
 }
 
-bool isTerm( size_t & index )
+bool Expression::isTerm( size_t & index )
 {
+	bracket_count = 0;
+
 	if ( isNumber(index)  )
 	{
 		index++;
@@ -121,13 +125,37 @@ bool isTerm( size_t & index )
 	// =============== FINISH THIS! ==================
 	else if( isOpBracket(expression[index]) )
 	{
+		this_end = index + 1;
+		bracket_count++;
+		std::vector<int> bracket_location;
+
+		while (this_end < expression.length() and bracket_count > 0)
+		{
+			if ( isClBracket(expression[this_end] )
+			{
+				bracket_count--;
+			}
+			else if ( isOpBracket(expression[this_end]) )
+			{
+				bracket_count++;
+			}
+			this_end++;
+		}
+		if (bracket_count == 0)
+		{
+			return isExpression(index, this_end);
+		}
+		else if ( bracket_count > 0 )
+		{
+			/* code */
+		}
 
 
 	}
 	// ===============================================
 }
 
-bool isNumber( size_t & index )
+bool Expression::isNumber( size_t & index )
 {
 	if (expression[index] > 47 && expression[index] < 58)
 	{
