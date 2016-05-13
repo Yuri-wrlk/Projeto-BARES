@@ -21,15 +21,9 @@ class Expression
 		enum char_types { NUMBER, OPERATOR, OP_PARENTHESIS, CL_PARENTHESIS, DEVOID};
 		
 		enum error_types { OUT_OF_RANGE = 1, ILL_FORMED, INVALID_OPERAND, EXTRANEOUS, MISMATCH, LOST_OPERATOR, MISSING_CLOSING, ZERO_DIV, OVRFLOW };
-		
+
 		char_types last_char;
 		
-		/*
-		enum characters { 	PLUS = 1, SIMPLE_MINUS = 1, TIMES = 2, DIV = 2, MOD = 2, 
-							EXP = 3, UNARY_MINUS = 4, OP_PARENTHESIS = 5, CL_PARENTHESIS = 5, 
-							NUMBER = 6,  NON_SUPPORTED = 7	};
-		*/
-
 		char operators [6] = {  '+', '-', '%', '*', '/', '^' }; 
 
 
@@ -41,6 +35,10 @@ class Expression
 		bool isLetter(char);
 		
 		bool analysis(const std::string &, int );
+		
+		void infixToPostFix ();
+		
+		int getPrecedence( char );
 
 
 	public:
@@ -59,7 +57,9 @@ class Expression
 
 		bool tokenize( void );
 
-		void errorMessage( std::string & );
+		std::string errorMessage( );
+		
+		bool calculate();
 		
 };
 

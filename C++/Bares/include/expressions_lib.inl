@@ -33,9 +33,6 @@ bool Expression::tokenize( void )
 		
 		if( !analysis(aux, i) )
 		{
-			std::string msg;
-			errorMessage( msg );
-			std::cout << msg << std::endl;
 			return false;
 		}
 		
@@ -49,10 +46,6 @@ bool Expression::tokenize( void )
 	{
 		err_type = MISSING_CLOSING;
 		err_column = bracket_count.top() + 1;
-		
-		std::string msg;
-		errorMessage( msg );
-		std::cout << msg << std::endl;
 		return false;
 	}
 	
@@ -60,20 +53,11 @@ bool Expression::tokenize( void )
 	{
 		err_type = ILL_FORMED;
 		err_column = i + 1;
-		std::string msg;
-		errorMessage( msg );
-		std::cout << msg << std::endl;
 		return false;
 	}
 
-	/*
-	std::cout << "tokenized is\n";
-	std::cout << tokenized;
-	std::cout << "\n";
-	*/
 	return true;
 }
-
 
 bool Expression::isOperator(char candidate)
 {
@@ -194,8 +178,10 @@ bool Expression::isLetter(char candidate)
 	return false;
 }
 
-void Expression::errorMessage( std::string & msg )
+std::string Expression::errorMessage(  )
 {
+	std::string msg;
+	
 	switch(err_type)
 	{
 		case OUT_OF_RANGE:
@@ -226,4 +212,65 @@ void Expression::errorMessage( std::string & msg )
 			msg = "Numeric overflow error!: column " + std::to_string(err_column);
 			break;
 	}
+	return msg;
+}
+
+void Expression::infixToPostFix ()
+{
+	
+	std::string aux;
+	std::string aux2;
+	while(!tokenized.isEmpty())
+	{
+		aux = tokenized.dequeue();
+		if(isInteger(aux))
+		{
+			postfix.enqueue(aux);
+		}
+		else
+		{
+			if(aux[0] == '(')
+				operatorStack.push(aux[0]);
+			else if (aux[0] == ')')
+			{
+				while(operatorStack.top() != '(')
+				{
+					aux2 = operatorStack.pop();
+					postfix.enqueue(aux2);
+				}
+					
+				
+				operatorStack.pop();
+			}
+			else 
+			{
+				while(!operatorStack.isEmpty() and getPrecedence(aux[0]) <= getPrecedence(operatorStack.top()))
+				{
+					aux2 = operatorStack.pop();
+					postfix.enqueue(aux2);
+				}
+					
+				operatorStack.push(aux[0]);
+			}
+		}
+	}
+	
+	while (!operatorStack.isEmpty())
+	{
+		aux2 = operatorStack.pop();
+		postfix.enqueue(aux2);
+	}
+}
+
+int Expression::getPrecedence( char op )
+{
+	
+	if( op == '+' or op == '-' )
+		return 1;
+	else if ( op == '*' or op == '/' or op == '%' )
+		return 2;
+	else if ( op == '^' )
+		return 3;
+	else
+		return 0;
 }
