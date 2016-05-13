@@ -17,7 +17,7 @@ bool Expression::tokenize( void )
 	auto i (0u);
 	for(; i < expression.length(); ++i)
 	{
-		if(expression[i] == ' ' or expression[i] == 9) //tab in ASCII is 9
+		if(expression[i] == 32 or expression[i] == 9) //tab in ASCII is 9
 			continue;
 		
 		aux = aux + expression[i];
@@ -206,10 +206,10 @@ std::string Expression::errorMessage(  )
 			msg = "Missing closing ’)’ to match opening ’(’ at: column " + std::to_string(err_column);
 			break;
 		case ZERO_DIV:
-			msg = "Division by zero!: column " + std::to_string(err_column);
+			msg = "Division by zero!";
 			break; 
 		case OVRFLOW:
-			msg = "Numeric overflow error!: column " + std::to_string(err_column);
+			msg = "Numeric overflow error!";
 			break;
 	}
 	return msg;
@@ -273,4 +273,89 @@ int Expression::getPrecedence( char op )
 		return 3;
 	else
 		return 0;
+}
+
+bool Expression::calculate()
+{
+	infixToPostFix();
+	Stack<int> operationStack;
+	std::string aux;
+	int operandA;
+	int operandB;
+	int result;
+
+	while(!postfix.isEmpty())
+	{
+		aux = postfix.dequeue();
+		if(isInteger(aux))
+		{
+			operationStack.push(std::stoi(aux));
+		}
+		else
+		{
+			operandB = operationStack.pop();
+			operandA = operationStack.pop();
+			
+			if (aux[0] == '+')
+			{
+				result = operandA + operandB;	
+				if ( result > 32767 or result < -32767 )
+				{
+					err_type = OVRFLOW;
+					return false;
+				}
+					
+			}
+			else if (aux[0] == '-')
+			{
+				result = operandA - operandB;	
+				if (result > 32767 or result < -32767 )
+				{
+					err_type = OVRFLOW;
+					return false;
+				}
+			}
+			else if (aux[0] == '*')
+			{
+				result = operandA * operandB;
+				if ( result > 32767 or result < -32767 )
+				{
+					err_type = OVRFLOW;
+					return false;
+				}
+			}
+			else if (aux[0] == '/')
+			{
+				if ( operandB == 0 )
+				{
+					err_type = ZERO_DIV;
+					return false;
+				}
+				result = operandA / operandB;
+			}
+			else if (aux[0] == '%')
+			{
+				result = operandA % operandB;
+			}
+			else if (aux[0] == '^')
+			{
+				result = pow(operandA, operandB);
+				if ( result > 32767 or result < -32767  )
+				{
+					err_type = OVRFLOW;
+					return false;
+				}
+			}
+			operationStack.push(result);
+		}
+	}
+	
+	expression_result = operationStack.pop();
+	
+	return true;
+}
+
+int Expression::getResult()
+{
+	return expression_result;
 }

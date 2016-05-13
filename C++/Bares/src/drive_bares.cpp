@@ -25,6 +25,15 @@ int main (int argc, const char *argv[])
 				destFile << tempExp.errorMessage() << std::endl;
 				continue;
 			}
+			
+			if ( not  (tempExp.calculate()) )
+			{
+				destFile << tempExp.errorMessage() << std::endl;
+				continue;	
+			}
+			
+			destFile << tempExp.getResult() << std::endl;
+			
 		}
 
 	}

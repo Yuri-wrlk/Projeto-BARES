@@ -8,6 +8,7 @@
 #include <cstring>
 #include <fstream>
 #include <cctype>
+#include <cmath>
 #include "queue.h"
 #include "stack.h"
 

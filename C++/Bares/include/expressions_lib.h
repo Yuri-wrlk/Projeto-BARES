@@ -16,6 +16,7 @@ class Expression
 		Stack<char> operatorStack;
 		int err_column;
 		int err_type;
+		int expression_result;
 		Stack<int> bracket_count;
 		
 		enum char_types { NUMBER, OPERATOR, OP_PARENTHESIS, CL_PARENTHESIS, DEVOID};
@@ -53,6 +54,8 @@ class Expression
 		{
 			tokenized.makeEmpty();
 			postfix.makeEmpty();
+			operatorStack.makeEmpty();
+			bracket_count.makeEmpty();
 		}
 
 		bool tokenize( void );
@@ -60,6 +63,8 @@ class Expression
 		std::string errorMessage( );
 		
 		bool calculate();
+		
+		int getResult();
 		
 };
 
