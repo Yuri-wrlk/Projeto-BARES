@@ -69,7 +69,7 @@ bool Expression::isOperator(char candidate)
 	return false;
 }
 
-bool Expression::analysis(const std::string & value, int position)
+bool Expression::analysis( std::string & value, int position)
 {
 	if (isInteger(value))
 	{
@@ -96,7 +96,12 @@ bool Expression::analysis(const std::string & value, int position)
 	
 	else if( isOperator(value[0]) )
 	{
-		if( last_char == DEVOID or last_char == OPERATOR)
+		
+		if (value[0] == '-' and (last_char != NUMBER or last_char != CL_PARENTHESIS))
+		{
+			value = "@";
+		}
+		else if( last_char == DEVOID or last_char == OPERATOR)
 		{
 			err_type = LOST_OPERATOR;
 			err_column = position + 1;
@@ -115,7 +120,7 @@ bool Expression::analysis(const std::string & value, int position)
 	{
 		bracket_count.push(position);
 		
-		if ( last_char == NUMBER or last_char == ')')
+		if ( last_char == NUMBER or last_char == CL_PARENTHESIS)
 		{
 			err_type = EXTRANEOUS;
 			err_column = position + 1;
@@ -217,6 +222,9 @@ std::string Expression::errorMessage(  )
 
 void Expression::infixToPostFix ()
 {
+
+	std::cout << "A fila infixa é:";
+	std::cout << tokenized;
 	
 	std::string aux;
 	std::string aux2;
@@ -260,6 +268,9 @@ void Expression::infixToPostFix ()
 		aux2 = operatorStack.pop();
 		postfix.enqueue(aux2);
 	}
+	
+	std::cout << "A fila posfixa é:";
+	std::cout << postfix;
 }
 
 int Expression::getPrecedence( char op )
@@ -271,6 +282,8 @@ int Expression::getPrecedence( char op )
 		return 2;
 	else if ( op == '^' )
 		return 3;
+	else if (op == '@')
+		return 4;
 	else
 		return 0;
 }
@@ -290,6 +303,12 @@ bool Expression::calculate()
 		if(isInteger(aux))
 		{
 			operationStack.push(std::stoi(aux));
+		}
+		else if (aux[0] == '@')
+		{
+			result = operationStack.pop();
+			result *= -1;
+			operationStack.push(result);
 		}
 		else
 		{

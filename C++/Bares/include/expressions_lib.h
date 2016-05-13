@@ -25,7 +25,7 @@ class Expression
 
 		char_types last_char;
 		
-		char operators [6] = {  '+', '-', '%', '*', '/', '^' }; 
+		char operators [7] = {  '+', '-', '%', '*', '/', '^', '@' }; 
 
 
 				
@@ -35,7 +35,7 @@ class Expression
 		
 		bool isLetter(char);
 		
-		bool analysis(const std::string &, int );
+		bool analysis(std::string &, int );
 		
 		void infixToPostFix ();
 		
