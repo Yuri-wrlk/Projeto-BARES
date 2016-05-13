@@ -14,8 +14,8 @@ bool Expression::tokenize( void )
 {
 
 	std::string aux = "";
-	
-	for(auto i (0u); i < expression.length(); ++i)
+	auto i (0u);
+	for(; i < expression.length(); ++i)
 	{
 		if(expression[i] == ' ' or expression[i] == 9) //tab in ASCII is 9
 			continue;
@@ -24,35 +24,48 @@ bool Expression::tokenize( void )
 		
 		if ( isdigit(expression[i]) ) 
 		{
-			while(i + 1 < expression.length() && isdigit(expression[i + 1]))
+			while( isdigit(expression[i + 1]) and i + 1 < expression.length())
 			{	
 				aux = aux + expression[++i];
 			}
 		}
 		
 		
-		if(!analysis(aux, i))
+		if( !analysis(aux, i) )
 		{
-			std::cout << "O erro é: " << err_type << " Na coluna: " << err_column << std::endl;
+			std::string msg;
+			errorMessage( msg );
+			std::cout << msg << std::endl;
 			return false;
 		}
-			
-		/*
-		
-		if(!bracket_count.isEmpty)
-		{
-			err_type = MISMATCH;
-			err_column = bracket_count.top();
-		}
-		
-		*/
-		
 		
 		tokenized.enqueue(aux);
 		aux = "";
 		
 		
 	}
+	
+	if(!(bracket_count.isEmpty()))
+	{
+		err_type = MISSING_CLOSING;
+		err_column = bracket_count.top() + 1;
+		
+		std::string msg;
+		errorMessage( msg );
+		std::cout << msg << std::endl;
+		return false;
+	}
+	
+	if(last_char == OPERATOR)
+	{
+		err_type = ILL_FORMED;
+		err_column = i + 1;
+		std::string msg;
+		errorMessage( msg );
+		std::cout << msg << std::endl;
+		return false;
+	}
+
 	/*
 	std::cout << "tokenized is\n";
 	std::cout << tokenized;
@@ -89,7 +102,7 @@ bool Expression::analysis(const std::string & value, int position)
 		if (test > 32767)
 		{
 			err_type = OUT_OF_RANGE;
-			err_column = position + 1;
+			err_column = ( position - value.length() ) + 2;
 			return false;
 		}
 		
@@ -179,4 +192,38 @@ bool Expression::isLetter(char candidate)
 		return true;
 		
 	return false;
+}
+
+void Expression::errorMessage( std::string & msg )
+{
+	switch(err_type)
+	{
+		case OUT_OF_RANGE:
+			msg = "Numeric constant out of range: column " + std::to_string(err_column);
+			break;
+		case ILL_FORMED:
+			msg = "Ill-formed expression or missing term detected: column " + std::to_string(err_column);
+			break; 
+		case INVALID_OPERAND:
+			msg = "Invalid operand: column " + std::to_string(err_column);
+			break; 
+		case EXTRANEOUS:
+			msg = "Extraneous symbol: column " + std::to_string(err_column);
+			break; 
+		case MISMATCH:
+			msg = "Mismatch ’)’: column " + std::to_string(err_column);
+			break; 
+		case LOST_OPERATOR:
+			msg = "Lost operator: column " + std::to_string(err_column);
+			break; 
+		case MISSING_CLOSING:
+			msg = "Missing closing ’)’ to match opening ’(’ at: column " + std::to_string(err_column);
+			break;
+		case ZERO_DIV:
+			msg = "Division by zero!: column " + std::to_string(err_column);
+			break; 
+		case OVRFLOW:
+			msg = "Numeric overflow error!: column " + std::to_string(err_column);
+			break;
+	}
 }

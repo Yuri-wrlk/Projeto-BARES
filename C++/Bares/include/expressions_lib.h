@@ -32,6 +32,17 @@ class Expression
 
 		char operators [6] = {  '+', '-', '%', '*', '/', '^' }; 
 
+
+				
+		bool isInteger(const std::string & );
+
+		bool isOperator(char);
+		
+		bool isLetter(char);
+		
+		bool analysis(const std::string &, int );
+
+
 	public:
 		Expression( std::string _expression = "" ) :
 			expression(_expression),
@@ -46,15 +57,9 @@ class Expression
 			postfix.makeEmpty();
 		}
 
-		bool analysis(const std::string &, int );
-		
 		bool tokenize( void );
-		
-		bool isInteger(const std::string & );
 
-		bool isOperator(char);
-		
-		bool isLetter(char);
+		void errorMessage( std::string & );
 		
 };
 
