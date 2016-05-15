@@ -1,5 +1,5 @@
 #include "header.h"
-#include "expressions_lib.h"
+#include "expression_lib.h"
 
 bool openFile (int argc,const char * argv[], std::ifstream & src_file, std::ofstream & dest_file);
 
