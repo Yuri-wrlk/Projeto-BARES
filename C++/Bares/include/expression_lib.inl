@@ -1,3 +1,9 @@
+/*!
+ *	@file expression_lib.inl
+ *
+ *  File with the Expression class methods implementation.
+ */
+
 #include "expression_lib.h"
 
 bool Expression::isInteger(const std::string & s)

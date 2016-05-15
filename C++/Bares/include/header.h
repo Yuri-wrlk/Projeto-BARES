@@ -1,3 +1,9 @@
+/*!
+ *  @file header.h
+ *
+ *  File that includes several libraries used in the project.
+ */
+
 #ifndef _HEADER_
 #define _HEADER_
 
