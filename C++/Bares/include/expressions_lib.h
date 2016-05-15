@@ -26,8 +26,6 @@ class Expression
 		char_types last_char;
 		
 		char operators [7] = {  '+', '-', '%', '*', '/', '^', '@' }; 
-
-
 				
 		bool isInteger(const std::string & );
 

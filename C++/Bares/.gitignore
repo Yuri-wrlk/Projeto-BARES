@@ -1,6 +1,4 @@
 bin/
+build/
 data/input_test.txt
 data/output_test.txt
-data/saida
-data/saida_test.txt
-data/results.txt

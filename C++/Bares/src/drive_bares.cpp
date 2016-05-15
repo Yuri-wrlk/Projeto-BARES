@@ -26,7 +26,7 @@ int main (int argc, const char *argv[])
 				continue;
 			}
 			
-			if ( not  (tempExp.calculate()) )
+			if ( not (tempExp.calculate()) )
 			{
 				destFile << tempExp.errorMessage() << std::endl;
 				continue;	

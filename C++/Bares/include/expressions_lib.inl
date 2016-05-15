@@ -17,6 +17,7 @@ bool Expression::tokenize( void )
 	auto i (0u);
 	for(; i < expression.length(); ++i)
 	{
+		// std::cout << ">>>Last char is " << last_char << "\n";
 		if(expression[i] == 32 or expression[i] == 9) //tab in ASCII is 9
 			continue;
 		
@@ -97,9 +98,12 @@ bool Expression::analysis( std::string & value, int position)
 	else if( isOperator(value[0]) )
 	{
 		
-		if (value[0] == '-' and (last_char != NUMBER or last_char != CL_PARENTHESIS))
+		if ( value[0] == '-' )
 		{
-			value = "@";
+			if ( last_char == OPERATOR or last_char == OP_PARENTHESIS or last_char == DEVOID )
+			{
+				value = "@";
+			}
 		}
 		else if( last_char == DEVOID or last_char == OPERATOR)
 		{
@@ -113,6 +117,7 @@ bool Expression::analysis( std::string & value, int position)
 			err_column = position + 1;
 			return false;
 		}
+
 		last_char = OPERATOR;
 	}
 	
@@ -138,27 +143,28 @@ bool Expression::analysis( std::string & value, int position)
 			err_type = MISMATCH;
 			err_column = position + 1;
 			return false;
-			
 		}
 		
 		bracket_count.pop();
 		
-		if (last_char == '(')
+		if ( last_char == OP_PARENTHESIS )
 		{
 			err_type = ILL_FORMED;
 			err_column = position + 1;
 			return false;
 		}
-		if(isOperator(last_char))
+
+		if( last_char == OPERATOR )
 		{
 			err_type = EXTRANEOUS;
 			err_column = position + 1;
 			return false;
 		}
+
 		last_char = CL_PARENTHESIS;
 	}
 	
-	else if(isLetter(value[0]))
+	else if( isLetter(value[0]) )
 	{
 		err_type = ILL_FORMED;
 		err_column = position + 1;

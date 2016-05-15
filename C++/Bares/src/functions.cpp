@@ -26,5 +26,4 @@ bool openFile (int argc,const char * argv[], std::ifstream & src_file, std::ofst
 		dest_file.open("data/results.txt");
 	}
 	return true;
-
 }
