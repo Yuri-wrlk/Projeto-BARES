@@ -1,7 +1,7 @@
 #include "header.h"
 #include "expression_lib.h"
 
-bool openFile (int argc,const char * argv[], std::ifstream & src_file, std::ofstream & dest_file);
+bool openFile (int argc, const char * argv[], std::ifstream & src_file, std::ofstream & dest_file);
 
 int main (int argc, const char *argv[])
 {

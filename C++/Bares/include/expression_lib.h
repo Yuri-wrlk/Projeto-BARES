@@ -22,57 +22,59 @@ class Expression
 		//==================== ATTRIBUTES ====================
 
 
-		//! String containing the expression line read via input file.
+		// String containing the expression line read via input file.
 		std::string expression;
-		//! Queue containing expression after tokenization.
+		// Queue containing expression after tokenization.
 		Queue<std::string> tokenized;
-		//! Queue containing expression in postfix format.
+		// Queue containing expression in postfix format.
 		Queue<std::string> postfix;
-		//! Stack used to calculate the expression result.
+		// Stack used to calculate the expression result.
 		Stack<char> operatorStack;
-		//! Indicates the column of a possible error on the expression.
+		// Indicates the column of a possible error on the expression.
 		int err_column;
-		//! Indicates the type a possible error on the expression.
+		// Indicates the type a possible error on the expression.
 		int err_type;
-		//! Result value of the expression after calculation.
+		// Result value of the expression after calculation.
 		int expression_result;
-		//! Indicates the column of each opening parenthesis on the expression. Used for error detection purposes.
+		// Indicates the column of each opening parenthesis on the expression. Used for error detection purposes.
 		Stack<int> bracket_count;
 
 		
-		//! Possible types of characteres that can appear on the expression.
-		//! DEVOID indicates the starting of the expression. It is used on the tokenize() method.
+		// Possible types of characteres that can appear on the expression.
+		// DEVOID indicates the starting of the expression. It is used on the tokenize() method.
 		enum char_types { NUMBER, OPERATOR, OP_PARENTHESIS, CL_PARENTHESIS, DEVOID};
 
-		//! Error types the program supports.		
-		enum error_types { OUT_OF_RANGE = 1, ILL_FORMED, INVALID_OPERAND, EXTRANEOUS, MISMATCH, LOST_OPERATOR, MISSING_CLOSING, ZERO_DIV, OVRFLOW };
+		// Error types the program supports.		
+		enum error_types { 	OUT_OF_RANGE = 1, ILL_FORMED = 2, INVALID_OPERAND = 3,
+							EXTRANEOUS = 4, MISMATCH = 5, LOST_OPERATOR = 6, 
+							MISSING_CLOSING = 7, ZERO_DIV = 8, OVRFLOW = 9};
 
-		//! Indicates the type of the last character read. It is used on the analysis() method.
+		// Indicates the type of the last character read. It is used on the analysis() method.
 		char_types last_char;
 		
-		//! Operators accepted by the program. '@' represents unary minus.
+		// Operators accepted by the program. '@' represents unary minus.
 		char operators [7] = {  '+', '-', '%', '*', '/', '^', '@' };
 
 		//==================== PRIVATE METHODS ====================
 
 		// For detailed description of each method, see 'expression_lib.inl' file.
 
-		//! Checks if the content of a string is an integer number.
+		// Checks if the content of a string is an integer number.
 		bool isInteger( const std::string & );
 
-		//! Checks if a given char is a valid operator.
+		// Checks if a given char is a valid operator.
 		bool isOperator( char );
 
-		//! Checks if some given char is a letter. Used for error detection purposes.		
+		// Checks if some given char is a letter. Used for error detection purposes.		
 		bool isLetter( char );
 
-		//! Analyzes the current character read in search of errors. Used during tokenization.
+		// Analyzes the current character read in search of errors. Used during tokenization.
 		bool analysis( std::string &, int );
 		
-		//! Converts a infix expression to its postfix form.
+		// Converts a infix expression to its postfix form.
 		void infixToPostFix ( void );
 		
-		//! Gets the precedence of an operator.
+		// Gets the precedence of an operator.
 		int getPrecedence( char );
 
 
@@ -109,16 +111,16 @@ class Expression
 
 		// For detailed description of each method, see 'expression_lib.inl' file.
 
-		//! Tokenizes the expression.
+		//sud Tokenizes the expression.
 		bool tokenize( void );
 
-		//! Gets the error message, in case the expression contains error.
+		// Gets the error message, in case the expression contains error.
 		std::string errorMessage( void );
 		
-		//! Calculates the expression result.
+		// Calculates the expression result.
 		bool calculate( void );
 		
-		//! Gets the expression result.
+		// Gets the expression result.
 		int getResult( void );
 		
 };
