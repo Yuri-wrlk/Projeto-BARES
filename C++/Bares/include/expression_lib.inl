@@ -10,10 +10,10 @@
 /*!
  *	@brief Tests if a string is an integer
  *	@param s A token string that contains a value
+ * 	@return True if the value is an integer, False if not
  *
  *	This is a slightly modified function of someone else's authorship.
  *	Extracted from: http://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int.
- * 	@return True if the value is an integer, False if not
  */
 bool Expression::isInteger(const std::string & s)
 {
@@ -27,8 +27,8 @@ bool Expression::isInteger(const std::string & s)
 }
 
 /*!
- *	@brief Tokenizes the line gotten from the file, sending each element to parsing
- *	@param none
+ *	@brief Tokenizes the line gotten from the file, sending each element to parsing.
+ * 	@return True if no error was found at any moment, false otherwise
  *
  *	The expression string, declared in Expression class, is examined sequentially
  *	ignoring any spaces.
@@ -36,8 +36,7 @@ bool Expression::isInteger(const std::string & s)
  *	error, if none is found, the item is inserted at the end of tokenized queue 
  *	(also declared in Expression class). At last, a few other possible errors are
  *	analyzed at the end of tokenization.
- 
- * 	@return True if no error was found at any moment, false otherwise
+ *
  */
 bool Expression::tokenize( void )
 {
@@ -107,12 +106,12 @@ bool Expression::tokenize( void )
 /*!
  *	@brief Tests if a character is a valid operator
  *	@param candidate The character to be tested
+ * 	@return True if the value is an valid operator, False if not
  *
  *	Compares if candidate is an operator between  '+', '-', '%', '*', '/', '^' or
- *  '@' (@ stands for unary minus)
- * 	@return True if the value is an valid operator, False if not
+ *  '@' (@ stands for unary minus).
  */
-bool Expression::isOperator(char candidate)
+bool Expression::isOperator( char candidate )
 {
 	/* Runs through the string that contais possible operators, comparing to all 
 	 * of them, if a match is found, then candidate is viable
@@ -127,9 +126,9 @@ bool Expression::isOperator(char candidate)
 
 /*!
  *	@brief Analyzes a character on the expression looking for errors.
- *
  * 	@param value The character to be analyzed.
  *	@param position The character's column on the expression.
+ * 	@return True if no error is identified, false otherwise.
  * 
  *  The method gets the character passed as parameter and checks if it represents 
  * 	any error on the expression. To do so, it considers the current character type
@@ -144,11 +143,10 @@ bool Expression::isOperator(char candidate)
  *	- A number must be succeeded by an operator or a closing parenthesis.
  *	- An operator must be succeeded by a number or an opening parenthesis.
  *	- An opening parenthesis must be succeeded by a number or an opening parenthesis.
- * 	- A closing parenthesis mus be succeeded by an operator or a closing parenthesis.
+ * 	- A closing parenthesis must be succeeded by an operator or a closing parenthesis.
  *
- * 	@return True if no error is identified, false otherwise.
  */
-bool Expression::analysis( std::string & value, int position)
+bool Expression::analysis( std::string & value, int position )
 {
 	/* If the current character is a number, errors occur when last character is:
 	 * - A number.
@@ -300,12 +298,12 @@ bool Expression::analysis( std::string & value, int position)
 
 /*!
  *	@brief Tests if a character is a character in the classic latin alphabet. 
- *	@param candidate The character to be tested
+ *	@param candidate The character to be tested.
+ * 	@return True if the value is inside the letter range in the ASCII table, False if not.
  *
- *	Compares if candidate is a simple or a capital character
- * 	@return True if the value is inside the letter range in the ASCII table, False if not
+ *	Compares if candidate is a simple or a capital character.
  */
-bool Expression::isLetter(char candidate)
+bool Expression::isLetter( char candidate )
 {
 	if ( (candidate >= 65 and candidate <= 90) or (candidate >= 97 and candidate <= 122))
 		return true;
@@ -316,13 +314,12 @@ bool Expression::isLetter(char candidate)
 
 /*!
  *	@brief Returns a string with the error, if there is any.
- *	@param none
+ * 	@return msg A string containing any error found in the expression.
  *
  *	This method analyzes the error that is set inside the err_type variable, then
- *	sets a string with the error type and the column in which it occurred;
- * 	@return msg A string containing any error found in the expression
+ *	sets a string with the error type and the column in which it occurred.
  */
-std::string Expression::errorMessage(  )
+std::string Expression::errorMessage( void )
 {
 	std::string msg;
 	
@@ -362,21 +359,43 @@ std::string Expression::errorMessage(  )
 	return msg;
 }
 
-void Expression::infixToPostFix ()
+/*!
+ *	@brief Converts expression from infix to postfix format.
+ *
+ *	The method converts the tokenized expression, in the infix format, to the
+ *	postfix notation. The tokens are read one by one. When the token is a number, 
+ * 	it is directly sent to the postfix queue. When it is an operator, it is sent
+ *	to the operator stack, only being sent to the postfix queue when another 	
+ * 	operator with lower precedence enters the queue or at the end of the process.
+ */
+void Expression::infixToPostFix ( void )
 {
+	// Receives the token temporarily
 	std::string aux;
+	// Does the same as aux, only used in some cases
 	std::string aux2;
 	while(!tokenized.isEmpty())
 	{
 		aux = tokenized.dequeue();
+		
+		// If it's a integer it is put directly in the queue
 		if(isInteger(aux))
 		{
 			postfix.enqueue(aux);
 		}
 		else
-		{
+		{	
+			/* If it's a opening parenthesis it's put directly into the operator	
+			 * stack, it has gotten the lowest precedence possible, but does not
+			 * generate any conflict
+			 */
 			if(aux[0] == '(')
 				operatorStack.push(aux[0]);
+			/* If it's a closing parenthesis, it means we've reached the end of 
+			 * the expression that beginned at the last opening parenthesis, so
+			 * we remove all operators from the stack and put them at the postfix
+			 * queue, lastly we remove the corresponding opening parenthesis
+			 */
 			else if (aux[0] == ')')
 			{
 				while(operatorStack.top() != '(')
@@ -388,6 +407,12 @@ void Expression::infixToPostFix ()
 				
 				operatorStack.pop();
 			}
+			/* If it's neither an integer nor a parenthesis, we should have an 
+			 * operator, so we should check it's priority whether it's priority
+			 * greater than the last operator (in this case we simply insert it)
+			 * or we keep removing operators and queueing them until we find an 
+			 * operator with lower precedence
+			 */
 			else 
 			{
 				while(!operatorStack.isEmpty() and getPrecedence(aux[0]) <= getPrecedence(operatorStack.top()))
@@ -401,6 +426,7 @@ void Expression::infixToPostFix ()
 		}
 	}
 	
+	// After the expression is fully read, we enqueue the remaining operators
 	while (!operatorStack.isEmpty())
 	{
 		aux2 = operatorStack.pop();
@@ -408,6 +434,21 @@ void Expression::infixToPostFix ()
 	}
 }
 
+/*!
+ *	@brief Gets the precedence of an operator.
+ *	@param op The operator we want to know the precedence.
+ *	@return The precedence of the operator.
+ *	
+ *	Gets the precedence of the operator passed as parameter, accordingly with the following:
+ *	() 		= precedence 0,
+ *	+, - 	= precedence 1,
+ *	*, /, % = precedence 2,
+ *	^ 		= precedence 4,
+ *	@ 		= precedence 5.
+ *
+ *	The '@' is used for unary minus.
+ *	
+ */
 int Expression::getPrecedence( char op )
 {
 	
@@ -423,28 +464,54 @@ int Expression::getPrecedence( char op )
 		return 0;
 }
 
-bool Expression::calculate()
+
+/*!
+ *	@brief Calculates the expression result.
+ *	@return True if the calculation was successful, false if an error occurred.
+ *
+ *	This method calculates the resulting value from the expression. First, it
+ *	calls the infixToPostFix() method to convert the expression format. Then, it
+ *	uses an auxiliary stack to store the operands and perfom the operations in 
+ *	the order stablished by the postfix notation. By the end of all operations, 
+ *	the result remains on the auxiliary stack and the 'expression_result' 
+ *	attribute receives this value.
+ *
+ */
+bool Expression::calculate( void )
 {
 	infixToPostFix();
+	// Auxiliary stack to put the operands.
 	Stack<int> operationStack;
+	// String variable to get each expression token.
 	std::string aux;
 	int operandA;
 	int operandB;
 	int result;
-
+	
 	while(!postfix.isEmpty())
-	{
+	{	
+		// Dequeues a token and pass it to the aux variable.
 		aux = postfix.dequeue();
+		// If the token is a number, it is added directly to the stack.
 		if(isInteger(aux))
 		{
 			operationStack.push(std::stoi(aux));
 		}
+		/* If the token is an unary minus, the top element is popped from the 
+		 * operands stack, multiplied by -1 and pushed back into the stack.
+		 */
 		else if (aux[0] == '@')
 		{
 			result = operationStack.pop();
 			result *= -1;
 			operationStack.push(result);
 		}
+		/* If the token is an operator, the two operands are popped from the stack
+		 * and the corresponding operation is executed with them. A test is performed
+		 * on operations that can produce some sort of error, which are:
+		 * - Overflow, produced by +, -, * and ^ operators.
+		 * - Division by 0, produced by / operator.
+		 */
 		else
 		{
 			operandB = operationStack.pop();
@@ -500,10 +567,14 @@ bool Expression::calculate()
 					return false;
 				}
 			}
+			/* The result of the current operation is pushed into the stack, to be used
+			 * in another operation or to represent the final result.
+			 */
 			operationStack.push(result);
 		}
 	}
 	
+	// After all operations, the expression result should be the only element in the stack.
 	expression_result = operationStack.pop();
 	
 	return true;
@@ -515,7 +586,7 @@ bool Expression::calculate()
  *
  *  Gets the result of the expression and returns it as an integer.
  */
-int Expression::getResult()
+int Expression::getResult( void )
 {
 	return expression_result;
 }

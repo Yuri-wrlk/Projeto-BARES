@@ -57,7 +57,7 @@ class Expression
 
 		//==================== PRIVATE METHODS ====================
 
-		// For detailed description of each method, see 'expression_lib.inl' file.
+		// For detailed description of each method, see 'include/expression_lib.inl' file.
 
 		// Checks if the content of a string is an integer number.
 		bool isInteger( const std::string & );
@@ -109,7 +109,7 @@ class Expression
 
 		//==================== PUBLIC METHODS ====================
 
-		// For detailed description of each method, see 'expression_lib.inl' file.
+		// For detailed description of each method, see 'include/expression_lib.inl' file.
 
 		//sud Tokenizes the expression.
 		bool tokenize( void );
