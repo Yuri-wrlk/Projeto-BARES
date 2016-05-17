@@ -59,11 +59,12 @@ The current version of BARES supports the use of:
 The operations precedence follows the rules of the table below.
 
 | Operator  | Precedence |
-| () 		|		0	|
-| +, - 	  	|		1	|
-| *, /, %   |		2	|
-| ^ 		|		3	|
-| - (unary) |		4	|
+|:---------:|:----------:|
+| () 		|		0	 |
+| +, - 	  	|		1	 |
+| *, /, %   |		2	 |
+| ^ 		|		3	 |
+| - (unary) |		4	 |
 
 
 
