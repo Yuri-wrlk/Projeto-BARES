@@ -4,11 +4,12 @@
 
 by Thiago Cesar Morais Diniz de Lucena & Yuri Reinaldo da Silva  
 
+Can be found at: https://github.com/Yuri-wrlk/Projeto-BARES
 
 Introduction
 --------------------------------------------------------------------------------------
 
-BARES, or *Basic ARithmetic Expression Evaluator based on Stacks*, is a program
+BARES, or *Basic ARithmetic \Expression Evaluator based on Stacks*, is a program
 made in C++ with the main purpose to take a series of arithmetic expressions,
 analyse it searching if there is any problem within the formula and, if it is 
 everything correct, give the expression result.
@@ -92,8 +93,8 @@ Obs.: The number of the column indicating the error on expressions indicates:
 - The column which a number starts, when the error is on that number
 (E.g.: "12 * 1800 5" has "E4 11" as result.)
 
- *_codes indicated by * do not show the column where it ocurred, because they are_
- _only found during the expression is being calculated_
+ *_codes indicated by * do not show the column where it ocurred, because they are 
+ only found during the expression is being calculated_
 
 Examples of valid and correct expressions
 --------------------------------------------------------------------------------------
