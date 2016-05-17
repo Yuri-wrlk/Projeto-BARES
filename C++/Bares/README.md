@@ -58,12 +58,12 @@ The current version of BARES supports the use of:
 
 The operations precedence follows the rules of the table below.
 
-Operator  | Precedence
-() 		  |		0
-+, - 	  |		1
-*, /, %   |		2
-^ 		  |		3
-- (unary) |		4
+| Operator  | Precedence |
+| () 		|		0	|
+| +, - 	  	|		1	|
+| *, /, %   |		2	|
+| ^ 		|		3	|
+| - (unary) |		4	|
 
 
 
@@ -97,14 +97,15 @@ Obs.: The number of the column indicating the error on expressions indicates:
 Examples of valid and correct expressions
 --------------------------------------------------------------------------------------
 
-Expression					| Result
--3 - -4						| 1
-35 - 3 * (-2 + 5)^2			| 8
-54 / 3 ^ (12%5) * 2			| 12
-((2-3)\* 10 - (2^3*5))		| -50
--3 + 4						| 1
-(27) / (-3)					| -9
-((((((((((7 ^ 2))))))))))	| 49 
+|Expression					| Result    |
+|:-------------------------:|:---------:|
+|-3 - -4					| 1         |
+|35 - 3 * (-2 + 5)^2		| 8         |
+|54 / 3 ^ (12%5) * 2		| 12        |
+|((2-3)\* 10 - (2^3*5))		| -50       |
+|-3 + 4						| 1         |
+|(27) / (-3)				| -9        |
+|((((((((((7 ^ 2))))))))))	| 49        |
 
 Bugs and limitations
 --------------------------------------------------------------------------------------
