@@ -74,16 +74,16 @@ If any expression has an error in it, the program will send the first error's
 code to the output file and, if aplicable, in which position of the original 
 expression it can be found. The possible errors are:
 
-Code | Associated error
- E1  | A number in the expression is above the integer limit (-+ 32.767)  
- E2  | A binary operator does not find it's 2nd operand
- E3  | There is a symbol who's neither a supported operator nor a number
- E4  | A 'lost' symbol is found within the expression 
- E5  | There is a ')' without a corresponding '(' in the expression
- E6  | A binary operator does not find it's first operand
- E7  | There is a '(' which does not find a ')'
- E8* | At some point, the expression leads to a division by zero
- E9* | At some point, a number higher than the limit is generated
+| Code | Associated error													|
+|  E1  | A number in the expression is above the integer limit (-+ 32.767	| 
+|  E2  | A binary operator does not find it's 2nd operand					|
+|  E3  | There is a symbol who's neither a supported operator nor a number	|
+|  E4  | A 'lost' symbol is found within the expression 					|
+|  E5  | There is a ')' without a corresponding '(' in the expression		|
+|  E6  | A binary operator does not find it's first operand					|
+|  E7  | There is a '(' which does not find a ')'							|
+|  E8* | At some point, the expression leads to a division by zero			|
+|  E9* | At some point, a number higher than the limit is generated			|
  
 Obs.: The number of the column indicating the error on expressions indicates:
 
