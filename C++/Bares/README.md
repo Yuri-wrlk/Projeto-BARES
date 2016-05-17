@@ -75,6 +75,7 @@ code to the output file and, if aplicable, in which position of the original
 expression it can be found. The possible errors are:
 
 | Code | Associated error													|
+|:----:|:------------------------------------------------------------------:|
 |  E1  | A number in the expression is above the integer limit (-+ 32.767	| 
 |  E2  | A binary operator does not find it's 2nd operand					|
 |  E3  | There is a symbol who's neither a supported operator nor a number	|
