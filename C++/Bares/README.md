@@ -2,18 +2,18 @@
 
 ##### Version 1.0.0 - Monday May 16th 2016
 
-by Thiago Cesar Morais Diniz de Lucena and Yuri Reinaldo da Silva  
+by Thiago Cesar Morais Diniz de Lucena & Yuri Reinaldo da Silva  
 
 
 Introduction
 --------------------------------------------------------------------------------------
 
 BARES, or *Basic ARithmetic Expression Evaluator based on Stacks*, is a program
-made in C++, it's main purpose is to take a series of arithmetic expressions and
-analyse it searching if there is any problem within the formula and if it is 
-well-formed.
+made in C++ with the main purpose to take a series of arithmetic expressions,
+analyse it searching if there is any problem within the formula and, if it is 
+everything correct, give the expression result.
 
-At the moment the program does not support algebraic or any other type of numeral 
+The current version does not support algebraic or any other type of numeral 
 other than integers.
 
 Instalation and running
@@ -28,72 +28,87 @@ To install and execute the program, follow these steps:
 3. Simply input the __make__ command.
 ..* Instead of make, another way to do it is by inputting the following command 
 	at the terminal:
-	g++ -std=c++11 -I include src/drive\_bares.cpp src/functions.cpp -o bin/drive_bares
 
-Para executar o programa deve-se extrair o arquivo "Projeto Keno-Game.
-zip", através do terminal navegar até a pasta principal (a que contém 
-as pastas "bin", "data", "include" e "src") e compilar o programa 
-através do seguinte comando:
+g++ -std=c++11 -I include src/drive\_bares.cpp src/functions.cpp -o bin/drive_bares
 
-	g++ -Wall -std=c++11 -I include/ src/drive_keno.cpp src/keno_func.cpp  src/keno_c.cpp -o bin/exe
 
-Logo após basta executar o jogo usando o comando:
+Then, to execute the program, you just run it by inputting the following command:
 	
-	./bin/exe /data/*nome_do_arquivo.txt*
+	bin/drive\_bares *input file* *output file*
+	
+*input file* should be substituted by the file containing the expressions who 
+should be analyzed. 
 
-É importante que *"nome_do_arquivo.txt"* seja substituido pelo nome do
-arquivo da sua aposta no tipo ".txt" ou similar.
+*output file* is where you want the results to be saved. It is optional and if 
+you do not wish to designate it the program will automatically generate a file
+at the "data" folder called "results.txt".
 
-O arquivo da aposta deverá conter, _em linhas separadas_, o valor de 
-sua aposta, o número de rodadas que se deseja jogar e os valores 
-inteiros entre 1 e 80 nos quais você deseja apostar. Esses valores 
-devem estar em uma única linha e devem ser separados por espaço.
+A reminder: the input file must contain only expressions with integers. Any 
+unsupported symbol such as a letter will be interpreted as an invalid character
+and will be properly treated as an error.
 
-Pronto! O Keno Game será executado e os resultados do jogo serão 
-exibidos na tela.
-
-
-Como Jogar
+Operations and terms supported
 --------------------------------------------------------------------------------------
 
-O Keno Game é um jogo de apostas em que são escolhidos até 15
-números entre 1 e 80, logo após o jogo irá gerar um total de
-20 valores no mesmo intervalo e então será calculada a quantidade
-de acertos e o valor a ser recebido.
+The current version of BARES supports the use of:
 
-É possível apostar entre 1 e 15 números, e para cada quantidade
-há uma tabela de pagamentos correspondente que será exibida.
+- Integer numeric constants (-32.768 to 32.767)
+- Operators (+, −, /, ∗,ˆ, %)
+- Parenthesis
 
-Também é permitido que o jogador distribua seus créditos em várias
-apostas. Para tal, basta aumentar o número de rodadas que os seus
-créditos passarão a ser divididos igualmente para cada jogo. 
+The operations precedence follows the rules of the table below.
+
+Operator  | Precedence
+() 		  |		0
++, - 	  |		1
+*, /, %   |		2
+^ 		  |		3
+- (unary) |		4
 
 
-Bugs e limitações
+
+Table of possible errors found by BARES
 --------------------------------------------------------------------------------------
 
-Caso os valores de créditos, rodadas e números apostados sejam
-inseridos na mesma linha, é possível que não seja feita a leitura de 
-todos. Portanto, é imprescindível que estas três características 
-estejam em linhas diferentes.
+If any expression has an error in it, the program will send the first error's 
+code to the output file and, if aplicable, in which position of the original 
+expression it can be found. The possible errors are:
 
-Números em conjunção com caracteres e outros símbolos também serão 
-ignorados.
+Code | Associated error
+ E1  | A number in the expression is above the integer limit (-+ 32.767)  
+ E2  | A binary operator does not find it's 2nd operand
+ E3  | There is a symbol who's neither a supported operator nor a number
+ E4  | A 'lost' symbol is found within the expression 
+ E5  | There is a ')' without a corresponding '(' in the expression
+ E6  | A binary operator does not find it's first operand
+ E7  | There is a '(' which does not find a ')'
+ E8* | At some point, the expression leads to a division by zero
+ E9* | At some point, a number higher than the limit is generated
+ 
+Obs.: The number of the column indicating the error on expressions indicates:
 
-Exemplo de uma aposta padrão:
+- The column which a number starts, when the error is on that number
+(E.g.: "12 * 1800 5" has "E4 11" as result.)
 
-1500 - Sendo o valor apostado
-4 - Quantidade de rodadas
-1 2 2 4 5 6 7 8 9 10 11 23 33 50 60 - Números apostados
+ *_codes indicated by * do not show the column where it ocurred, because they are_
+ _only found during the expression is being calculated_
 
-Exemplo de uma aposta válida:
+Examples of valid and correct expressions
+--------------------------------------------------------------------------------------
 
-as
-das
-das
-dasd
-1500 a a a
--2 4
+Expression					| Result
+-3 - -4						| 1
+35 - 3 * (-2 + 5)^2			| 8
+54 / 3 ^ (12%5) * 2			| 12
+((2-3)\* 10 - (2^3*5))		| -50
+-3 + 4						| 1
+(27) / (-3)					| -9
+((((((((((7 ^ 2))))))))))	| 49 
 
-1 2 2 4 -1 5 6 7 8 9 10 '11' '23' 33 50 60
+Bugs and limitations
+--------------------------------------------------------------------------------------
 
+Terms non-supported by the program:
+
+- Unary plus. (E.g.: +3 * 5)
+- More than one unary minus in sequence. (E.g.: --5 * -------3)

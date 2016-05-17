@@ -1,4 +1,10 @@
 /*!
+ *  @mainpage Project BARES
+ *  @authors Thiago Cesar Morais Diniz de Lucena
+ *  @authors Yuri Reinaldo da Silva
+ *  @date May, 2016
+ *  @version Beta
+ *
  *  @file header.h
  *
  *  File that includes several libraries used in the project.

@@ -443,8 +443,8 @@ void Expression::infixToPostFix ( void )
  *	() 		= precedence 0,
  *	+, - 	= precedence 1,
  *	*, /, % = precedence 2,
- *	^ 		= precedence 4,
- *	@ 		= precedence 5.
+ *	^ 		= precedence 3,
+ *	@ 		= precedence 4.
  *
  *	The '@' is used for unary minus.
  *	

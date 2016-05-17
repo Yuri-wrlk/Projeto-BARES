@@ -43,7 +43,7 @@ bool openFile (int argc,const char * argv[], std::ifstream & src_file, std::ofst
 	}
 	
 	/* If two arguments were passed, dest_file receives the second as the
-	 * destination file
+	 * destination file.
 	 */
 	if(argc > 2)
 	{

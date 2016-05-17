@@ -1,4 +1,10 @@
 /*!
+ *  @mainpage Project BARES
+ *  @authors Thiago Cesar Morais Diniz de Lucena
+ *  @authors Yuri Reinaldo da Silva
+ *  @date May, 2016
+ *  @version Beta
+ *
  *	@file drive_bares.cpp
  *
  *  File with the main function, and the program's functionality.
