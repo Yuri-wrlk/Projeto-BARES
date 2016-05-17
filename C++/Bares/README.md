@@ -9,7 +9,7 @@ Can be found at: https://github.com/Yuri-wrlk/Projeto-BARES
 Introduction
 --------------------------------------------------------------------------------------
 
-BARES, or *Basic ARithmetic \Expression Evaluator based on Stacks*, is a program
+BARES, or *Basic ARithmetic Expression Evaluator based on Stacks*, is a program
 made in C++ with the main purpose to take a series of arithmetic expressions,
 analyse it searching if there is any problem within the formula and, if it is 
 everything correct, give the expression result.
