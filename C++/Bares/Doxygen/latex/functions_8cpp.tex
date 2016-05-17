@@ -1,0 +1,43 @@
+\hypertarget{functions_8cpp}{}\section{functions.\+cpp File Reference}
+\label{functions_8cpp}\index{functions.\+cpp@{functions.\+cpp}}
+{\ttfamily \#include \char`\"{}header.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{functions_8cpp_a3584a425ce51392f10e48ebe10d1ce14}{open\+File} (int argc, const char $\ast$argv\mbox{[}$\,$\mbox{]}, std\+::ifstream \&src\+\_\+file, std\+::ofstream \&dest\+\_\+file)
+\begin{DoxyCompactList}\small\item\em Open the file passed as an argument. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File with the implementation of functions used on main. 
+
+\subsection{Function Documentation}
+\index{functions.\+cpp@{functions.\+cpp}!open\+File@{open\+File}}
+\index{open\+File@{open\+File}!functions.\+cpp@{functions.\+cpp}}
+\subsubsection[{\texorpdfstring{open\+File(int argc, const char $\ast$argv[], std\+::ifstream \&src\+\_\+file, std\+::ofstream \&dest\+\_\+file)}{openFile(int argc, const char *argv[], std::ifstream &src_file, std::ofstream &dest_file)}}]{\setlength{\rightskip}{0pt plus 5cm}bool open\+File (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{const char $\ast$}]{argv\mbox{[}$\,$\mbox{]}, }
+\item[{std\+::ifstream \&}]{src\+\_\+file, }
+\item[{std\+::ofstream \&}]{dest\+\_\+file}
+\end{DoxyParamCaption}
+)}\hypertarget{functions_8cpp_a3584a425ce51392f10e48ebe10d1ce14}{}\label{functions_8cpp_a3584a425ce51392f10e48ebe10d1ce14}
+
+
+Open the file passed as an argument. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & An integer containing the number of arguments received \\
+\hline
+{\em argv} & A vector of strings, keeps the aarguments received \\
+\hline
+{\em src\+\_\+file} & Will keep the file that will be read \\
+\hline
+{\em dest\+\_\+file} & Stores destination file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+False if input\+\_\+file argument is invalid or non-\/existent, True otherwise.
+\end{DoxyReturn}
+This function checks if a input file and a destination file were passed as arguments, if no input file was passed, the function sends an error and is terminated, outherwise it is set to src\+\_\+file. If no destination file was passed the a default one is created at \textquotesingle{}data/results.\+txt\textquotesingle{}. 

@@ -1,0 +1,126 @@
+\subparagraph*{Version 1.\+0.\+0 -\/ Monday May 16th 2016}
+
+by Thiago Cesar Morais Diniz de Lucena \& Yuri Reinaldo da Silva
+
+\subsection*{Introduction }
+
+B\+A\+R\+ES, or {\itshape Basic A\+Rithmetic \hyperlink{class_expression}{Expression} Evaluator based on Stacks}, is a program made in C++ with the main purpose to take a series of arithmetic expressions, analyse it searching if there is any problem within the formula and, if it is everything correct, give the expression result.
+
+The current version does not support algebraic or any other type of numeral other than integers.
+
+\subsection*{Instalation and running }
+
+To install and execute the program, follow these steps\+:
+
+
+\begin{DoxyEnumerate}
+\item The file must be extracted from the accompanying zip folder \char`\"{}\+Project\+\_\+\+Bares.\+zip\char`\"{}, it should come with all the files necessary.
+\item Open your terminal and navigate to the folder where the files where extracted to.
+\item Simply input the {\bfseries make} command. ..$\ast$ Instead of make, another way to do it is by inputting the following command at the terminal\+:
+\end{DoxyEnumerate}
+
+g++ -\/std=c++11 -\/I include \hyperlink{drive__bares_8cpp}{src/drive\+\_\+bares.\+cpp} \hyperlink{functions_8cpp}{src/functions.\+cpp} -\/o bin/drive\+\_\+bares
+
+Then, to execute the program, you just run it by inputting the following command\+: \begin{DoxyVerb}bin/drive\_bares *input file* *output file*
+\end{DoxyVerb}
+
+
+{\itshape input file} should be substituted by the file containing the expressions who should be analyzed.
+
+{\itshape output file} is where you want the results to be saved. It is optional and if you do not wish to designate it the program will automatically generate a file at the \char`\"{}data\char`\"{} folder called \char`\"{}results.\+txt\char`\"{}.
+
+A reminder\+: the input file must contain only expressions with integers. Any unsupported symbol such as a letter will be interpreted as an invalid character and will be properly treated as an error.
+
+\subsection*{Operations and terms supported }
+
+The current version of B\+A\+R\+ES supports the use of\+:
+
+
+\begin{DoxyItemize}
+\item Integer numeric constants (-\/32.\+768 to 32.\+767)
+\item Operators (+, −, /, ∗,ˆ, \%)
+\item Parenthesis
+\end{DoxyItemize}
+
+The operations precedence follows the rules of the table below.
+
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*2{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\centering {\bf Operator }&\PBS\centering {\bf Precedence  }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\centering {\bf Operator }&\PBS\centering {\bf Precedence  }\\\cline{1-2}
+\endhead
+\PBS\centering () &\PBS\centering 0 \\\cline{1-2}
+\PBS\centering +, -\/ &\PBS\centering 1 \\\cline{1-2}
+\PBS\centering $\ast$, /, \% &\PBS\centering 2 \\\cline{1-2}
+\PBS\centering $^\wedge$ &\PBS\centering 3 \\\cline{1-2}
+\PBS\centering -\/ (unary) &\PBS\centering 4 \\\cline{1-2}
+\end{longtabu}
+
+
+\subsection*{Table of possible errors found by B\+A\+R\+ES }
+
+If any expression has an error in it, the program will send the first error\textquotesingle{}s code to the output file and, if aplicable, in which position of the original expression it can be found. The possible errors are\+:
+
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*2{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\centering {\bf Code }&\PBS\centering {\bf Associated error  }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\centering {\bf Code }&\PBS\centering {\bf Associated error  }\\\cline{1-2}
+\endhead
+\PBS\centering E1 &\PBS\centering A number in the expression is above the integer limit (-\/+ 32.\+767 \\\cline{1-2}
+\PBS\centering E2 &\PBS\centering A binary operator does not find it\textquotesingle{}s 2nd operand \\\cline{1-2}
+\PBS\centering E3 &\PBS\centering There is a symbol who\textquotesingle{}s neither a supported operator nor a number \\\cline{1-2}
+\PBS\centering E4 &\PBS\centering A \textquotesingle{}lost\textquotesingle{} symbol is found within the expression \\\cline{1-2}
+\PBS\centering E5 &\PBS\centering There is a \textquotesingle{})\textquotesingle{} without a corresponding \textquotesingle{}(\textquotesingle{} in the expression \\\cline{1-2}
+\PBS\centering E6 &\PBS\centering A binary operator does not find it\textquotesingle{}s first operand \\\cline{1-2}
+\PBS\centering E7 &\PBS\centering There is a \textquotesingle{}(\textquotesingle{} which does not find a \textquotesingle{})\textquotesingle{} \\\cline{1-2}
+\PBS\centering E8$\ast$ &\PBS\centering At some point, the expression leads to a division by zero \\\cline{1-2}
+\PBS\centering E9$\ast$ &\PBS\centering At some point, a number higher than the limit is generated \\\cline{1-2}
+\end{longtabu}
+Obs.\+: The number of the column indicating the error on expressions indicates\+:
+
+
+\begin{DoxyItemize}
+\item The column which a number starts, when the error is on that number (E.\+g.\+: \char`\"{}12 $\ast$ 1800 5\char`\"{} has \char`\"{}\+E4 11\char`\"{} as result.)
+
+$\ast$\+\_\+codes indicated by $\ast$ do not show the column where it ocurred, because they are\+\_\+ {\itshape only found during the expression is being calculated}
+\end{DoxyItemize}
+
+\subsection*{Examples of valid and correct expressions }
+
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*2{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\centering {\bf \hyperlink{class_expression}{Expression} }&\PBS\centering {\bf Result  }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\centering {\bf \hyperlink{class_expression}{Expression} }&\PBS\centering {\bf Result  }\\\cline{1-2}
+\endhead
+\PBS\centering -\/3 -\/ -\/4 &\PBS\centering 1 \\\cline{1-2}
+\PBS\centering 35 -\/ 3 $\ast$ (-\/2 + 5)$^\wedge$2 &\PBS\centering 8 \\\cline{1-2}
+\PBS\centering 54 / 3 $^\wedge$ (12\%5) $\ast$ 2 &\PBS\centering 12 \\\cline{1-2}
+\PBS\centering ((2-\/3)$\ast$ 10 -\/ (2$^\wedge$3$\ast$5)) &\PBS\centering -\/50 \\\cline{1-2}
+\PBS\centering -\/3 + 4 &\PBS\centering 1 \\\cline{1-2}
+\PBS\centering (27) / (-\/3) &\PBS\centering -\/9 \\\cline{1-2}
+\PBS\centering ((((((((((7 $^\wedge$ 2)))))))))) &\PBS\centering 49 \\\cline{1-2}
+\end{longtabu}
+\subsection*{Bugs and limitations }
+
+Terms non-\/supported by the program\+:
+
+
+\begin{DoxyItemize}
+\item Unary plus. (E.\+g.\+: +3 $\ast$ 5)
+\item More than one unary minus in sequence. (E.\+g.\+: --5 $\ast$ -\/-\/-\/-\/---3) 
+\end{DoxyItemize}

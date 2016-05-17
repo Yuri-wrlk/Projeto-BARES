@@ -1,0 +1,126 @@
+\hypertarget{class_expression}{}\section{Expression Class Reference}
+\label{class_expression}\index{Expression@{Expression}}
+
+
+\hyperlink{class_expression}{Expression} class.  
+
+
+
+
+{\ttfamily \#include $<$expression\+\_\+lib.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_expression_a9468e945e84cd6f942d7f44b2629fe03}{Expression} (std\+::string \+\_\+expression=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Class constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_expression_a3e99570b177da619eeb2c5787cbb148e}{$\sim$\+Expression} ()
+\begin{DoxyCompactList}\small\item\em Class destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{class_expression_ae0d0eaddc8706c19f522cb146ede437a}{tokenize} (void)
+\begin{DoxyCompactList}\small\item\em Tokenizes the line gotten from the file, sending each element to parsing. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{class_expression_a3929c5947ded6ab6912b0a164453aab6}{error\+Message} (void)
+\begin{DoxyCompactList}\small\item\em Returns a string with the error, if there is any. \end{DoxyCompactList}\item 
+bool \hyperlink{class_expression_a0eb085621d093a3b71110221469aa010}{calculate} (void)
+\begin{DoxyCompactList}\small\item\em Calculates the expression result. \end{DoxyCompactList}\item 
+int \hyperlink{class_expression_a73ec06ed06029cff2841d720c99e25da}{get\+Result} (void)
+\begin{DoxyCompactList}\small\item\em Gets the result of the expression. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_expression}{Expression} class. 
+
+Class that represents a single expression. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Expression@{Expression}!Expression@{Expression}}
+\index{Expression@{Expression}!Expression@{Expression}}
+\subsubsection[{\texorpdfstring{Expression(std\+::string \+\_\+expression="""")}{Expression(std::string _expression="")}}]{\setlength{\rightskip}{0pt plus 5cm}Expression\+::\+Expression (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{\+\_\+expression = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_expression_a9468e945e84cd6f942d7f44b2629fe03}{}\label{class_expression_a9468e945e84cd6f942d7f44b2629fe03}
+
+
+Class constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+expression} & A expression read from file.\\
+\hline
+\end{DoxyParams}
+The class constructor sets the expression as the string given as argument, being empty by default. The err\+\_\+column and err\+\_\+type variables are set to 0. The last\+\_\+char variable is set as D\+E\+V\+O\+ID, indicating the beginning of the expression. \index{Expression@{Expression}!````~Expression@{$\sim$\+Expression}}
+\index{````~Expression@{$\sim$\+Expression}!Expression@{Expression}}
+\subsubsection[{\texorpdfstring{$\sim$\+Expression()}{~Expression()}}]{\setlength{\rightskip}{0pt plus 5cm}Expression\+::$\sim$\+Expression (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_expression_a3e99570b177da619eeb2c5787cbb148e}{}\label{class_expression_a3e99570b177da619eeb2c5787cbb148e}
+
+
+Class destructor. 
+
+Empties all queues and stacks. 
+
+\subsection{Member Function Documentation}
+\index{Expression@{Expression}!calculate@{calculate}}
+\index{calculate@{calculate}!Expression@{Expression}}
+\subsubsection[{\texorpdfstring{calculate(void)}{calculate(void)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Expression\+::calculate (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_expression_a0eb085621d093a3b71110221469aa010}{}\label{class_expression_a0eb085621d093a3b71110221469aa010}
+
+
+Calculates the expression result. 
+
+\begin{DoxyReturn}{Returns}
+True if the calculation was successful, false if an error occurred.
+\end{DoxyReturn}
+This method calculates the resulting value from the expression. First, it calls the infix\+To\+Post\+Fix() method to convert the expression format. Then, it uses an auxiliary stack to store the operands and perfom the operations in the order stablished by the postfix notation. By the end of all operations, the result remains on the auxiliary stack and the \textquotesingle{}expression\+\_\+result\textquotesingle{} attribute receives this value. \index{Expression@{Expression}!error\+Message@{error\+Message}}
+\index{error\+Message@{error\+Message}!Expression@{Expression}}
+\subsubsection[{\texorpdfstring{error\+Message(void)}{errorMessage(void)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string Expression\+::error\+Message (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_expression_a3929c5947ded6ab6912b0a164453aab6}{}\label{class_expression_a3929c5947ded6ab6912b0a164453aab6}
+
+
+Returns a string with the error, if there is any. 
+
+\begin{DoxyReturn}{Returns}
+msg A string containing any error found in the expression.
+\end{DoxyReturn}
+This method analyzes the error that is set inside the err\+\_\+type variable, then sets a string with the error type and the column in which it occurred. \index{Expression@{Expression}!get\+Result@{get\+Result}}
+\index{get\+Result@{get\+Result}!Expression@{Expression}}
+\subsubsection[{\texorpdfstring{get\+Result(void)}{getResult(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int Expression\+::get\+Result (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_expression_a73ec06ed06029cff2841d720c99e25da}{}\label{class_expression_a73ec06ed06029cff2841d720c99e25da}
+
+
+Gets the result of the expression. 
+
+\begin{DoxyReturn}{Returns}
+The expression result as an integer.
+\end{DoxyReturn}
+Gets the result of the expression and returns it as an integer. \index{Expression@{Expression}!tokenize@{tokenize}}
+\index{tokenize@{tokenize}!Expression@{Expression}}
+\subsubsection[{\texorpdfstring{tokenize(void)}{tokenize(void)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Expression\+::tokenize (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_expression_ae0d0eaddc8706c19f522cb146ede437a}{}\label{class_expression_ae0d0eaddc8706c19f522cb146ede437a}
+
+
+Tokenizes the line gotten from the file, sending each element to parsing. 
+
+\begin{DoxyReturn}{Returns}
+True if no error was found at any moment, false otherwise
+\end{DoxyReturn}
+The expression string, declared in \hyperlink{class_expression}{Expression} class, is examined sequentially ignoring any spaces. Then each item is sent to the analysis function to check whether there is any error, if none is found, the item is inserted at the end of tokenized queue (also declared in \hyperlink{class_expression}{Expression} class). At last, a few other possible errors are analyzed at the end of tokenization. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{expression__lib_8h}{expression\+\_\+lib.\+h}\item 
+\hyperlink{expression__lib_8inl}{expression\+\_\+lib.\+inl}\end{DoxyCompactItemize}
