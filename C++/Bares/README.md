@@ -35,7 +35,7 @@ g++ -std=c++11 -I include src/drive\_bares.cpp src/functions.cpp -o bin/drive_ba
 
 Then, to execute the program, you just run it by inputting the following command:
 	
-	bin/drive\_bares *input file* *output file*
+	bin/drive_bares *input file* *output file*
 	
 *input file* should be substituted by the file containing the expressions who 
 should be analyzed. 
@@ -78,7 +78,7 @@ expression it can be found. The possible errors are:
 
 | Code | Associated error													|
 |:----:|:------------------------------------------------------------------:|
-|  E1  | A number in the expression is above the integer limit (-+ 32.767	| 
+|  E1  | A number in the expression is above the integer limit (-+ 32.767)	| 
 |  E2  | A binary operator does not find it's 2nd operand					|
 |  E3  | There is a symbol who's neither a supported operator nor a number	|
 |  E4  | A 'lost' symbol is found within the expression 					|
